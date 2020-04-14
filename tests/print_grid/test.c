@@ -16,5 +16,5 @@ int main() {
         }
     }
 
-    print_grid(&grid, stdout);
+    print_grid(&grid);
 }
