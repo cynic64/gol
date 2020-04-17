@@ -1,0 +1,4 @@
+Cell at 4, 3 has 2 neighbors (it should have 2)
+Cell at 4, 4 has 3 neighbors (it should have 3)
+Cell at 4, 5 has 2 neighbors (it should have 2)
+Cell at 3, 4 has 2 neighbors (it should have 2)

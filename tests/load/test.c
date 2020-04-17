@@ -4,7 +4,7 @@
 #include "../../view.h"
 #include "../../save.h"
 
-void main() {
+int main() {
     FILE *fp = fopen("saved.gol", "r");
 
     if (fp == NULL) {
@@ -20,4 +20,6 @@ void main() {
 
     printf("Loaded grid:\n");
     print_grid(&grid);
+
+    return 0;
 }

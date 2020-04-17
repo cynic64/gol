@@ -9,14 +9,18 @@ for (<*>) {
     next unless -d $_;
 
     print "---- Compiling $_ ----\n";
-    system "cd $_; gcc test.c -o test";
+    system "cd $_; gcc -O3 test.c -o test";
 
     print "     Done compiling, running\n";
-    system "cd $_; ./test > actual 2>&1";
-
-    if (compare("$_/expected", "$_/actual")) {
-        print "!    $_ failed!\n";
+    if ($_ =~ /bench/) {
+        system "cd $_; ./test";
     } else {
-        print "     $_ OK\n";
+        system "cd $_; ./test > actual 2>&1";
+
+        if (compare("$_/expected", "$_/actual")) {
+            print "!    $_ failed!\n";
+        } else {
+            print "     $_ OK\n";
+        }
     }
 }
