@@ -8,10 +8,13 @@
 #define HEIGHT 20;
 
 int main() {
-    Grid grid = grid_new(10, 10);
+    Grid grid;
+    grid_new(&grid, 10, 10);
+
     grid_set(&grid, 3, 3, 1);
     grid_set(&grid, 3, 4, 1);
     grid_set(&grid, 3, 5, 1);
+
     printf("Cell at 4, 3 has %d neighbors (it should have 2)\n",
         count_neighbors(&grid, 4, 3));
     printf("Cell at 4, 4 has %d neighbors (it should have 3)\n",

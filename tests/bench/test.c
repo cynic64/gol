@@ -14,7 +14,8 @@ void randomize(Grid *grid);
 double get_time();
 
 int main() {
-    Grid grid = grid_new(WIDTH, HEIGHT);
+    Grid grid;
+    grid_new(&grid, WIDTH, HEIGHT);
 
     randomize(&grid);
 

@@ -7,7 +7,8 @@
 #define HEIGHT 40
 
 int main() {
-    Grid grid = grid_new(WIDTH, HEIGHT);
+    Grid grid;
+    grid_new(&grid, WIDTH, HEIGHT);
 
     srand(0);
     for (unsigned y = 0; y < HEIGHT; y++) {

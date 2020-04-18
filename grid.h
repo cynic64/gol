@@ -1,20 +1,22 @@
 #include <stdlib.h>
 
-typedef struct _Grid {
+typedef struct Grid {
     char *state;
     char *next_state;
     unsigned width;
     unsigned height;
 } Grid;
 
+char *grid_ptr(Grid *grid, unsigned x, unsigned y) {
+    return grid->state + (y * grid->width + x);
+}
+
 char grid_get(Grid *grid, unsigned x, unsigned y) {
-    return grid->state[y * grid->width + x];
+    return *grid_ptr(grid, x, y);
 }
 
 void grid_set(Grid *grid, unsigned x, unsigned y, char val) {
-    // will not set the padding
-    if (x != 0 && x != grid->width - 1 && y != 0 && y != grid->height - 1)
-        grid->state[y * grid->width + x] = val;
+    *grid_ptr(grid, x, y) = val;
 }
 
 char count_neighbors(Grid *grid, unsigned x, unsigned y) {
@@ -53,12 +55,9 @@ void grid_gen(Grid *grid) {
     grid->next_state = tmp;
 }
 
-Grid grid_new(unsigned width, unsigned height) {
-    Grid grid;
-    grid.state = malloc(width * height);
-    grid.next_state = malloc(width * height);
-    grid.width = width;
-    grid.height = height;
-
-    return grid;
+void grid_new(Grid *grid, unsigned width, unsigned height) {
+    grid->state = malloc(width * height);
+    grid->next_state = malloc(width * height);
+    grid->width = width;
+    grid->height = height;
 }

@@ -10,7 +10,7 @@ int load_grid(Grid *grid, FILE *fp) {
 
     fseek(fp, 0, SEEK_SET);
 
-    *grid = grid_new(width, height);
+    grid_new(grid, width, height);
 
     for (unsigned y = 0; y < grid->height; y++) {
         for (unsigned x = 0; x < grid->width; x++) {

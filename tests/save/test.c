@@ -9,7 +9,8 @@
 #define HEIGHT 30
 
 int main() {
-    Grid grid = grid_new(WIDTH, HEIGHT);
+    Grid grid;
+    grid_new(&grid, WIDTH, HEIGHT);
 
     srand(0);
 
