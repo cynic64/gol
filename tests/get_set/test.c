@@ -9,6 +9,7 @@ int main() {
     World world = world_new(CHUNK_WIDTH, CHUNK_HEIGHT);
 
     Chunk *chunk = world.chunks[0];
+
     // try to get outside a chunk boundary, should return falses
     char state = chunk_get(chunk, CHUNK_WIDTH, 0);
     printf("Cell get past boundary: %d\n", state);

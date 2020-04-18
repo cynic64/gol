@@ -49,7 +49,9 @@ void grid_gen(Grid *grid) {
             }
         }
     }
+}
 
+void grid_swap(Grid *grid) {
     char *tmp = grid->state;
     grid->state = grid->next_state;
     grid->next_state = tmp;

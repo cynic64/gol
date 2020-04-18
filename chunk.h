@@ -77,7 +77,6 @@ char *chunk_ptr(Chunk *chunk, int x, int y) {
 }
 
 char chunk_get(Chunk *chunk, int x, int y) {
-    // can access neighboring chunks
     char *ptr = chunk_ptr(chunk, x, y);
 
     if (ptr == NULL) return 0;
@@ -86,7 +85,7 @@ char chunk_get(Chunk *chunk, int x, int y) {
 }
 
 void chunk_set(Chunk *chunk, int x, int y, char val) {
-    // will not try to access neighboring chunks
+    // will not go across chunk boundaries
     grid_set(chunk->ctr, x, y, val);
 }
 
@@ -101,4 +100,10 @@ int chunk_ncount(Chunk *chunk, int x, int y) {
         + chunk_get(chunk, x + 1, y - 1)
         + chunk_get(chunk, x + 1, y    )
         + chunk_get(chunk, x + 1, y + 1);
+}
+
+int chunk_gen(Chunk *chunk) {
+    // first calculate the next state for all cells in the center (does not
+    // swap buffers yet)
+    grid_gen(chunk->ctr);
 }

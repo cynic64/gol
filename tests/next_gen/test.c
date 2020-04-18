@@ -21,5 +21,6 @@ int main() {
         print_grid(&grid);
         printf("\n");
         grid_gen(&grid);
+        grid_swap(&grid);
     }
 }
