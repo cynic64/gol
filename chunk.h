@@ -20,6 +20,15 @@ void chunk_new(Chunk *chunk, int cwidth, int cheight, int cx, int cy) {
 
     chunk->cx = cx;
     chunk->cy = cy;
+
+    chunk->n = NULL;
+    chunk->ne = NULL;
+    chunk->e = NULL;
+    chunk->se = NULL;
+    chunk->s = NULL;
+    chunk->sw = NULL;
+    chunk->w = NULL;
+    chunk->nw = NULL;
 }
 
 char *chunk_ptr(Chunk *chunk, int x, int y) {
@@ -102,8 +111,48 @@ int chunk_ncount(Chunk *chunk, int x, int y) {
         + chunk_get(chunk, x + 1, y + 1);
 }
 
+char chunk_check_cell(Chunk *chunk, int x, int y) {
+    // updates the cell at (x, y) within the central grid. Used to update
+    // border cells.
+
+    // returns 1 if the cell was set, 0 otherwise
+
+    int neighbors = chunk_ncount(chunk, x, y);
+    char state = grid_get(chunk->ctr, x, y);
+    if ((state && neighbors == 2 || neighbors == 3) ||
+        (!state && neighbors == 3)) {
+        chunk->ctr->next_state[y * chunk->ctr->width + x] = 1;
+        return 1;
+    } else {
+        chunk->ctr->next_state[y * chunk->ctr->width + x] = 0;
+        return 0;
+    }
+}
+
 int chunk_gen(Chunk *chunk) {
     // first calculate the next state for all cells in the center (does not
     // swap buffers yet)
     grid_gen(chunk->ctr);
+
+    // then do borders, and if any become set on and we have some NULL
+    // surroundings, return 1 to signal that we want all surrounding chunks to be generated
+    int ret = 0;
+
+    // top & bottom
+    for (int x = 0; x < chunk->ctr->width; x++) {
+        if (chunk_check_cell(chunk, x, 0) || chunk_check_cell(chunk, x, chunk->ctr->height-1))
+            ret = -1;
+    }
+
+    // left and right
+    for (int y = 0; y < chunk->ctr->height; y++) {
+        if (chunk_check_cell(chunk, 0, y) || chunk_check_cell(chunk, chunk->ctr->width-1, y))
+            ret = -1;
+    }
+
+    return ret;
+}
+
+void chunk_swap(Chunk *chunk) {
+    grid_swap(chunk->ctr);
 }
